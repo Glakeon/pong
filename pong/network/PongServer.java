@@ -100,11 +100,12 @@ public class PongServer implements NetworkConstants {
 		
 		private class SendThread extends Thread {
 			public void run() {
+				// While the connection is open, get the current state of the game and send it to the client
 				while (open) {
 					try {
 						String message = Message.toString(game.getOutput(ID));
 						out.println(Message.toString(game.getOutput(ID)));
-						System.out.println("SEND PLAYER " + ID + ": " + message);
+						// System.out.println("SEND PLAYER " + ID + ": " + message);
 						out.flush();
 						sleep(SERVER_SEND_DELAY);
 					} catch (Exception e) {
@@ -115,6 +116,7 @@ public class PongServer implements NetworkConstants {
 				}
 			}
 		}
+		
 		// Thread for each connection that constantly receives messages
 		private class ReceiveThread extends Thread {
 			public void run() {
@@ -122,7 +124,7 @@ public class PongServer implements NetworkConstants {
 					try {
 						String message = in.readLine();
 						HashMap<String, String> values = Message.toTable(message);
-						System.out.println("RECEIVE PLAYER " + ID + ": " + message);
+						// System.out.println("RECEIVE PLAYER " + ID + ": " + message);
 						game.processInput(values);
 						sleep(SERVER_RECEIVE_DELAY);
 					} catch (Exception e) {

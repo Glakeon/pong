@@ -73,7 +73,7 @@ public class PongClient extends JFrame implements LocalConstants, NetworkConstan
 			while (active) {
 				try {
 					String message = Message.toString(game.getOutput());
-					System.out.println("SEND: " + message);
+					// System.out.println("SEND: " + message);
 					out.println(message);
 					out.flush();
 					sleep(CLIENT_SEND_DELAY);
@@ -92,7 +92,7 @@ public class PongClient extends JFrame implements LocalConstants, NetworkConstan
 				try {
 					String message = in.readLine();
 					if (message != null) {
-						System.out.println("RECEIVE: " + message);
+						// System.out.println("RECEIVE: " + message);
 						HashMap<String, String> values = Message.toTable(message);
 						ID = Integer.parseInt(values.get("ID"));
 						game.processInput(values);
