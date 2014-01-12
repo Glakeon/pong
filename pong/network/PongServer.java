@@ -1,19 +1,11 @@
 package pong.network;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 
 public class PongServer implements NetworkConstants {
-	
-	// Map that associates ID with connections
-	private TreeMap<Integer, ClientConnection> clientConnections = new TreeMap<Integer, ClientConnection>();
 	
 	// The Pong game on the server
 	private ServerState game;
@@ -23,7 +15,6 @@ public class PongServer implements NetworkConstants {
 	// Listens and accepts connections
 	private ServerSocket serverSocket;
 	private AcceptThread acceptThread;
-	private boolean up = true;
 	private int nextID = 1;
 	
 	public static void main(String[] args) {
@@ -57,6 +48,11 @@ public class PongServer implements NetworkConstants {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}
+			try {
+				sleep(START_DELAY);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			game = new ServerState();
 			connections[0].setOpen();

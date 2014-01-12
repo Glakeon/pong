@@ -3,7 +3,6 @@ package pong.network;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.*;
 
 import javax.swing.JPanel;
