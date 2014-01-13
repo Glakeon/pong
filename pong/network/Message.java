@@ -3,7 +3,7 @@ package pong.network;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-// All values in a message must be at least one character long
+// Message is a class with static methods that convert between String representation and HashMap
 public class Message implements NetworkConstants {
 	
 	// Turns a HashMap of the message into a String to pass between server and client

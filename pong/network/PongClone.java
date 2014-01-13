@@ -7,7 +7,7 @@ import pong.local.*;
 import javax.swing.JFrame;
 
 
-
+// Client for the Pong game
 public class PongClone extends JFrame implements LocalConstants, NetworkConstants {
 
 	private static ClientState game;
@@ -24,21 +24,24 @@ public class PongClone extends JFrame implements LocalConstants, NetworkConstant
 		super("Pong");
 		setSize(APPLICATION_DIMENSIONS[0], APPLICATION_DIMENSIONS[1]);
 		game = new ClientState();
-		game.setFocusable(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.setFocusable(true);			
 		getContentPane().add(game);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
+	// Set a player active to start sending and receiving messages
 	public void setActive() {
 		active = true;
 		System.out.println("Player set active");
+		
 		// Start sending and receiving from server
 		sendThread.start();
 		receiveThread.start();
 		game.run();
 	}
 	
+	// Get the ID of the player
 	public int getID() {
 		return ID;
 	}
@@ -68,6 +71,7 @@ public class PongClone extends JFrame implements LocalConstants, NetworkConstant
 		}
 	}
 	
+	// Thread to keep sending messages
 	private class SendThread extends Thread {
 		public void run() {
 			while (active) {
@@ -85,7 +89,8 @@ public class PongClone extends JFrame implements LocalConstants, NetworkConstant
 			}
 		}
 	}
-	// Thread for each connection that constantly receives messages
+	
+	// Thread that constantly receives messages
 	private class ReceiveThread extends Thread {
 		public void run() {
 			while (active) {

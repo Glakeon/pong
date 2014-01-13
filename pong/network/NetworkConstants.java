@@ -11,7 +11,6 @@ public interface NetworkConstants {
 	// Delays for sending and receiving messages on server side
 	public static final int SERVER_SEND_DELAY = 5;
 	public static final int SERVER_RECEIVE_DELAY = 5;
-	public static final int START_DELAY = 5000;
 	
 	// Delays for sending and receiving message on client side
 	public static final int CLIENT_SEND_DELAY = 5;

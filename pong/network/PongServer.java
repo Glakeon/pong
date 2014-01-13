@@ -3,9 +3,10 @@ package pong.network;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import pong.local.*;
 
 
-public class PongServer implements NetworkConstants {
+public class PongServer implements NetworkConstants, LocalConstants {
 	
 	// The Pong game on the server
 	private ServerState game;
@@ -41,6 +42,7 @@ public class PongServer implements NetworkConstants {
 	// Thread that accepts user connections as long as the maximum number is not reached
 	private class AcceptThread extends Thread {
 		public void run() {
+			// Need two players to play Pong
 			for (int i = 0; i < 2; i++) {
 				try {
 					Socket connection = serverSocket.accept();
@@ -49,11 +51,15 @@ public class PongServer implements NetworkConstants {
 					e.printStackTrace();
 				}
 			}
+			
+			// Initial delay until the game starts
 			try {
-				sleep(START_DELAY);
+				sleep(INITIAL_DELAY);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			// Start the game and set all connections open
 			game = new ServerState();
 			connections[0].setOpen();
 			connections[1].setOpen();
@@ -86,6 +92,7 @@ public class PongServer implements NetworkConstants {
 			}
 		}
 		
+		// Set the connection open to start sending and receiving message
 		public void setOpen() {
 			open = true;
 			out.println("ACTIVE " + ID);
@@ -120,7 +127,8 @@ public class PongServer implements NetworkConstants {
 					try {
 						String message = in.readLine();
 						HashMap<String, String> values = Message.toTable(message);
-						// System.out.println("RECEIVE PLAYER " + ID + ": " + message);
+						
+						// Process the input
 						game.processInput(values);
 						sleep(SERVER_RECEIVE_DELAY);
 					} catch (Exception e) {
